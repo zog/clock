@@ -1,0 +1,55 @@
+body
+  background: #fafafa
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
+  color: #444
+
+.row
+  overflow: hidden
+  display: flex
+
+clock-display
+  display: flex
+
+clock-digit
+  flex: 1
+  margin-right: 1vw
+  &:nth-child(2n)
+    margin-right: 10vw
+  &:last-child
+    margin-right: 0
+
+custom-clock
+  $size: 40px
+  float: left
+  // width: $size
+  height: auto
+  flex: 1
+  // border: 1px solid #ccc
+  border-radius: $size
+  position: relative
+  transition: opacity 0.3s, background-color 0.3s
+  &:before
+    content: ''
+    float: left
+    padding-top: 100%
+  &.active
+    background-color: orange
+  &.locked
+    background-color: black
+  &.hidden
+    opacity: 0.1
+  &.fast
+    .hand
+      transition: transform 0.1s linear
+  .hand
+    position: absolute
+    top: 50%
+    left: 50%
+    width: 55%
+    height: 2px
+    background-color: black
+    transform-origin: 0 50%
+    transition: transform 0.3s
+    &.minutes
+      // width: 40%
+      transform: rotate(20deg)
