@@ -1,7 +1,7 @@
 'use strict';
 
 class Clock extends HTMLElement {
-  attachedCallback() {
+  draw() {
     this.minutes = document.createElement('div')
     this.minutes.classList.add('minutes')
     this.minutes.classList.add('hand')
@@ -10,6 +10,10 @@ class Clock extends HTMLElement {
     this.hours.classList.add('hand')
     this.appendChild(this.minutes)
     this.appendChild(this.hours)
+  }
+
+  attachedCallback() {
+    this.draw()
     this.val = null
   }
 
@@ -51,7 +55,7 @@ class Clock extends HTMLElement {
     setTimeout(()=>{
       this.classList.remove('active')
     }, 500)
-    if(val == ""){
+    if(val == "" || val == "."){
       this.classList.add("hidden")
       this.minutes.style.transform = "rotate(0deg)"
       this.hours.style.transform = "rotate(20deg)"
@@ -68,6 +72,12 @@ class Clock extends HTMLElement {
       }
       else if(val == "⌜"){
         this.minutes.style.transform = "rotate(0deg)"
+        this.hours.style.transform = "rotate(90deg)"
+      } else if(val == "⊢"){
+        this.minutes.style.transform = "rotate(-90deg)"
+        this.hours.style.transform = "rotate(90deg)"
+      } else if(val == "⊣"){
+        this.minutes.style.transform = "rotate(-90deg)"
         this.hours.style.transform = "rotate(90deg)"
       }
       else if(val == "⌝"){

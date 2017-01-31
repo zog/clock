@@ -15,7 +15,12 @@ class ClockDisplay extends HTMLElement {
 
   get cols(){
     let s = this.getAttribute('cols');
-    return s ? JSON.parse(s) : 4;
+    return s ? JSON.parse(s) : 8;
+  }
+
+  get pixels(){
+    let s = this.getAttribute('pixels');
+    return s ? s : "custom-clock";
   }
 
   digitsVals() {
@@ -54,6 +59,9 @@ class ClockDisplay extends HTMLElement {
     let digit
     while(i < this.digitsCount){
       digit = document.createElement("clock-digit")
+      digit.setAttribute("rows", this.rows)
+      digit.setAttribute("cols", this.cols)
+      digit.setAttribute("pixels", this.pixels)
       this.appendChild(digit)
       this.digits.push(digit)
       i += 1
@@ -61,6 +69,7 @@ class ClockDisplay extends HTMLElement {
 
     this.locked = false
     this.showTime()
+    // this.digits[0].show(2)
 
     this.addEventListener('mousedown', ()=>{
       console.log("down")

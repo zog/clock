@@ -1,4 +1,5 @@
 import Clock from './clock'
+import Cube from './cube'
 
 class ClockDigit extends HTMLElement {
   get rows(){
@@ -11,59 +12,75 @@ class ClockDigit extends HTMLElement {
     return s ? parseInt(JSON.parse(s)) : 4;
   }
 
+  get pixels(){
+    let s = this.getAttribute('pixels');
+    return s ? s : "custom-clock";
+  }
+
+
   mapping(val) {
-    return {
-      0: [
-        ["⌜", "-", "⌝"],
-        ["|", "", "|"],
-        ["⌞", "-", "⌟"]
-      ],
-      1: [
-        ["", "", "|"],
-        ["", "", "|"],
-        ["", "", "|"]
-      ],
-      2: [
-        ["-", "-", "⌝"],
-        ["⌜", "-", "⌟"],
-        ["⌞", "-", "-"]
-      ],
-      3: [
-        ["-", "-", "⌝"],
-        ["-", "-", "|"],
-        ["-", "-", "⌟"]
-      ],
-      4: [
-        ["|", "", "|"],
-        ["⌞", "-", "⌟"],
-        ["", "", "|"]
-      ],
-      5: [
-        ["⌜", "-", "-"],
-        ["⌞", "-", "⌝"],
-        ["-", "-", "⌟"]
-      ],
-      6: [
-        ["⌜", "-", "-"],
-        ["|", "-", "⌝"],
-        ["⌞", "-", "⌟"]
-      ],
-      7: [
-        ["-", "-", "⌝"],
-        ["", "", "|"],
-        ["", "", "|"]
-      ],
-      8: [
-        ["⌜", "-", "⌝"],
-        ["|", "-", "|"],
-        ["⌞", "-", "⌟"]
-      ],
-      9: [
-         ["⌜", "-", "⌝"],
-         ["⌞", "-", "|"],
-         ["", "", "|"]
-      ]
+    const s = {
+      0: `
+      ⌜-⌝
+      |.|
+      ⌞-⌟
+      `,
+      1: `
+        ..|
+        ..|
+        ..|
+      `,
+      2: `
+        --⌝
+        ⌜-⌟
+        ⌞--
+      `,
+      3: `
+        --⌝
+        --|
+        --⌟
+      `,
+      4: `
+        |..
+        ⌞-⌝
+        ..|
+      `,
+      5: `
+        ⌜--
+        ⌞-⌝
+        --⌟
+      `,
+      6: `
+        ⌜--
+        ⊢-⌝
+        ⌞-⌟
+      `,
+      7: `
+        --⌝
+        ..|
+        ..|
+      `,
+      8: `
+        ⌜-⌝
+        |.|
+        ⊢-⊣
+        ⌞-⌟
+      `,
+      9: `
+        ⌜-⌝
+        |.|
+        ⌞-|
+        ..|
+        ..|
+        ..|
+        ..|
+        ..|
+      `
     }[val]
+    let a = s.split("\n").map((e)=>{return e.trim().split('')})
+    a.splice(0, 1)
+    a.pop()
+    return a
   }
 
   attachedCallback() {
@@ -75,7 +92,7 @@ class ClockDigit extends HTMLElement {
       row.classList.add('row')
       if(!this.matrix[i]){ this.matrix[i] = [] }
       while(j < this.cols){
-        var clock = document.createElement('custom-clock')
+        var clock = document.createElement(this.pixels)
         clock.setAttribute("x", j)
         clock.setAttribute("y", i)
         row.appendChild(clock)
@@ -91,52 +108,60 @@ class ClockDigit extends HTMLElement {
   mapPixel(x, y, matrix){
     // here we pam the clock coordinate to the corresponding piwel in the matrix
     let _x, _y
+
+    const nbRows = matrix.length
+    const nbCols = matrix[0].length
+    // we test if we are on an edge
     if(x == 0){ _x = 0 }
     if(y == 0){ _y = 0 }
-    if(x == this.cols-1){ _x = 2 }
-    if(y == this.rows-1){ _y = 2 }
-    if(x == this.cols/2){ _x = 1 }
-    if(y == this.rows/2){ _y = 1 }
+    if(x == this.cols-1){ _x = nbCols - 1 }
+    if(y == this.rows-1){ _y = nbRows - 1 }
 
-    // console.log(x, y, _x, _y, _y == undefined)
+    // now we test if this piwel is on an "anchor"
+    for(let i=1; i < nbCols - 1; i++){
+      if(x == parseInt(i / (nbCols-1) * this.cols)){ _x = i }
+    }
+    for(let i=1; i < nbRows - 1; i++){
+      if(y == parseInt(i / (nbRows-1) * this.rows)){ _y = i }
+    }
     if(_x >= 0  && _y >= 0){
-      // console.log("_x != undefined && _y != undefined")
       return matrix[_y][_x]
     }
-    if(matrix[1][1] == "|" && x == this.cols/2){
-      return "|"
-    }
-    if(matrix[1][1] == "-" && y == this.rows/2){
-      return "-"
-    }
+    // if(matrix[1][1] == "|" && x == this.cols/2){
+    //   return "|"
+    // }
+    // if(matrix[1][1] == "-" && y == this.rows/2){
+    //   return "-"
+    // }
     if(_x >= 0 && _y == undefined){
       // we are on a vertical edge, but not in a corner
-      // console.log("_x && _y == undefined", _x, 1)
-      if(y <= this.rows/2){
-        if(matrix[0][_x] == "⌜" || matrix[0][_x] == "⌝" || matrix[0][_x] == "|"){
-          // console.log('HERE', x, y)
-          return "|"
-        }
-        else{
-          return ""
-        }
-      } else {
-        if(matrix[2][_x] == "⌞" || matrix[2][_x] == "⌟" || matrix[2][_x] == "|"){
-          return "|"
-        }
-        else{
-          return ""
-        }
+      let i = 0;
+      while(i < nbRows && y > parseInt(i / (nbRows-1) * this.rows)){
+        i ++
       }
-      return matrix[1][_x]
+      const prevAnchor = matrix[i-1][_x]
+      if(prevAnchor == "⌜" || prevAnchor == "⌝" || prevAnchor == "⊢" || prevAnchor == "⊣" || prevAnchor == "⊤" || prevAnchor == "|"){
+        return '|'
+      }
+      else {
+        return ""
+      }
     }
     if(_y >= 0 && _x == undefined){
       // we are on an horizontal edge, but not in a corner
-      // console.log("_y && _x == undefined", 1, _y)
-      return matrix[_y][1]
+      let i = 0;
+      while(i < nbCols && x > parseInt(i / (nbCols-1) * this.cols)){
+        i ++
+      }
+      const prevAnchor = matrix[_y][i-1]
+      if(prevAnchor == "⌜" || prevAnchor == "⌞" || prevAnchor == "⊤" || prevAnchor == "⊢" || prevAnchor == "⊣" || prevAnchor == "-"){
+        return "-"
+      }
+      else {
+        return ""
+      }
     }
 
-    // console.log("fallback")
     return ""
   }
 
@@ -154,12 +179,10 @@ class ClockDigit extends HTMLElement {
     let x = 0
     let y = 0
     let pixel
-    // console.log("matrix: ", matrix)
     for(let line of this.matrix){
       x = 0
       for(let clock of line){
         let pixel = this.mapPixel(x, y, matrix)
-        // console.log(x, y, clock, pixel)
         p = p.then(()=>{
           return clock.animate(pixel)
         })
@@ -173,17 +196,14 @@ class ClockDigit extends HTMLElement {
 
 
   show(val) {
-    // console.log("showing: " + val)
     const matrix = this.mapping(val)
     let x = 0
     let y = 0
     let pixel
-    // console.log("matrix: ", matrix)
     for(let line of this.matrix){
       x = 0
       for(let clock of line){
         let pixel = this.mapPixel(x, y, matrix)
-        // console.log(x, y, clock, pixel)
         clock.show(pixel)
         x += 1
       }
