@@ -83,7 +83,7 @@ class ClockDigit extends HTMLElement {
     return a
   }
 
-  attachedCallback() {
+  initMatrix() {
     let i = 0
     let j = 0
     this.matrix = []
@@ -103,6 +103,10 @@ class ClockDigit extends HTMLElement {
       j = 0
       i += 1
     }
+  }
+
+  attachedCallback() {
+    this.initMatrix()
   }
 
   mapPixel(x, y, matrix){
@@ -193,9 +197,8 @@ class ClockDigit extends HTMLElement {
     return p
   }
 
-
-
   show(val) {
+    if(!this.matrix){ return }
     const matrix = this.mapping(val)
     let x = 0
     let y = 0

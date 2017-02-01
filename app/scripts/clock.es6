@@ -12,7 +12,7 @@ class Clock extends HTMLElement {
     this.appendChild(this.hours)
   }
 
-  attachedCallback() {
+  createdCallback() {
     this.draw()
     this.val = null
   }
