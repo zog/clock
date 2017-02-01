@@ -18,6 +18,11 @@ class ClockDisplay extends HTMLElement {
     return s ? parseInt(s) : 8;
   }
 
+  get customText(){
+    let s = this.getAttribute('custom-text');
+    return s && s.length > 0 ? s : null;
+  }
+
   get pixels(){
     let s = this.getAttribute('pixels');
     return s ? s : "custom-clock";
@@ -34,6 +39,24 @@ class ClockDisplay extends HTMLElement {
     return [hh, h - hh*10, mm, m - mm*10, ss, s - ss*10]
   }
 
+  loopIteration(){
+    if(this.customText){ this.showCustomText(); return}
+    if(this.locked){ return}
+    this.showTime()
+  }
+
+  showCustomText(){
+    let i = 0
+    const text = this.customText
+    for(let digit of this.digits){
+      digit.show(text[i])
+      i += 1
+    }
+    setTimeout(()=>{
+      this.loopIteration()
+    }, 100)
+  }
+
   showTime() {
     let i = 0
     let val = this.digitsVals()
@@ -42,9 +65,8 @@ class ClockDisplay extends HTMLElement {
       i += 1
     }
     setTimeout(()=>{
-      if(this.locked){ return}
-      this.showTime()
-    }, 1000)
+      this.loopIteration()
+    }, 100)
   }
 
   lock() {
@@ -73,8 +95,8 @@ class ClockDisplay extends HTMLElement {
     }
 
     this.locked = false
-    this.showTime()
-    // this.digits[0].show(2)
+    this.loopIteration()
+    // this.digits[0].show(9)
 
     this.addEventListener('mousedown', ()=>{
       this.locked = true

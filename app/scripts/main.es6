@@ -3,7 +3,7 @@
 import ClockDisplay from './clock_display'
 
 let pixels = "custom-clock"
-let rows = 8
+let rows = 5
 let cols = 4
 
 const displayClock = ()=>{
@@ -17,6 +17,7 @@ const displayClock = ()=>{
   for(let k in values){
     out.setAttribute(k, values[k])
   }
+  out.setAttribute("custom-text", $('input[name=customText]').val())
 
   $('#display')[0].appendChild(out)
 }
@@ -35,6 +36,10 @@ $(document).ready(()=>{
   $('input[name=rows]').change((e)=>{
     rows = $(e.target).val()
     displayClock()
+  })
+
+  $('input[name=customText]').change((e)=>{
+    $('#display clock-display').attr('custom-text', $(e.target).val())
   })
 
   displayClock()

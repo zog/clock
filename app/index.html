@@ -27,7 +27,7 @@
 
 
         <div class="settings row">
-            <fieldset class='col-md-6'>
+            <fieldset class='col-md-4'>
                 <legend>Pixels</legend>
                 <label class="radio-inline">
                     <input type="radio" name="pixels" value="custom-clock" checked="" />
@@ -39,19 +39,29 @@
                     Tiles
                 </label>
             </fieldset>
-            <fieldset class='col-md-6 form-inline'>
+            <fieldset class='col-md-4 form-inline'>
                 <legend>Resolution</legend>
-                <div class="form-group">
-                    <div class="input-group">
-                        <input type="number" name="cols" value="4" id="colsInput" class="form-control" pattern="\d*"/>
-                        <div class="input-group-addon">Cols</div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <div class="input-group">
+                            <input type="number" name="cols" value="4" id="colsInput" class="form-control" pattern="\d*"/>
+                            <div class="input-group-addon">Cols</div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <div class="input-group">
+                            <input type="number" name="rows" value="5" id="rowsInput" class="form-control" pattern="\d*"/>
+                            <div class="input-group-addon">Rows</div>
+                        </div>
                     </div>
                 </div>
+
+            </fieldset>
+            <fieldset class='col-md-4 form-inline'>
+                <legend>Custom Value</legend>
                 <div class="form-group">
-                    <div class="input-group">
-                        <input type="number" name="rows" value="4" id="rowsInput" class="form-control" pattern="\d*"/>
-                        <div class="input-group-addon">Rows</div>
-                    </div>
+                    <label for="customText">
+                    <input type="number" name="customText" value="" max="999999" min="0" id="customText" class="form-control" pattern="\d*"/>
                 </div>
 
             </fieldset>

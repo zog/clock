@@ -19,54 +19,60 @@ class ClockDigit extends HTMLElement {
 
 
   mapping(val) {
+    const key = (val === undefined ? "" : `${val}`)
+    console.log(val, key)
     const s = {
-      0: `
+      "": `
+      ..
+      ..
+      `,
+      "0": `
       ⌜-⌝
       |.|
       ⌞-⌟
       `,
-      1: `
+      "1": `
         ..|
         ..|
         ..|
       `,
-      2: `
+      "2": `
         --⌝
         ⌜-⌟
         ⌞--
       `,
-      3: `
+      "3": `
         --⌝
         --|
         --⌟
       `,
-      4: `
+      "4": `
         |..
         ⌞-⌝
         ..|
       `,
-      5: `
+      "5": `
         ⌜--
         ⌞-⌝
         --⌟
       `,
-      6: `
+      "6": `
         ⌜--
         ⊢-⌝
         ⌞-⌟
       `,
-      7: `
+      "7": `
         --⌝
         ..|
         ..|
       `,
-      8: `
+      "8": `
         ⌜-⌝
         |.|
         ⊢-⊣
         ⌞-⌟
       `,
-      9: `
+      "9": `
         ⌜-⌝
         |.|
         ⌞-|
@@ -76,7 +82,7 @@ class ClockDigit extends HTMLElement {
         ..|
         ..|
       `
-    }[val]
+    }[key]
     let a = s.split("\n").map((e)=>{return e.trim().split('')})
     a.splice(0, 1)
     a.pop()
@@ -118,26 +124,26 @@ class ClockDigit extends HTMLElement {
     // we test if we are on an edge
     if(x == 0){ _x = 0 }
     if(y == 0){ _y = 0 }
+
     if(x == this.cols-1){ _x = nbCols - 1 }
     if(y == this.rows-1){ _y = nbRows - 1 }
 
-    // now we test if this piwel is on an "anchor"
-    for(let i=1; i < nbCols - 1; i++){
-      if(x == parseInt(i / (nbCols-1) * this.cols)){ _x = i }
+    // now we test if this pixel is on an "anchor"
+    if(_x ===  undefined){
+      for(let i=1; i < nbCols - 1; i++){
+        if(x == parseInt(i / (nbCols-1) * this.cols)){ _x = i }
+      }
     }
-    for(let i=1; i < nbRows - 1; i++){
-      if(y == parseInt(i / (nbRows-1) * this.rows)){ _y = i }
+    if(_y ===  undefined){
+      for(let i=1; i < nbRows - 1; i++){
+        if(y == parseInt(i / (nbRows-1) * this.rows)){ _y = i }
+      }
     }
     if(_x >= 0  && _y >= 0){
       return matrix[_y][_x]
     }
-    // if(matrix[1][1] == "|" && x == this.cols/2){
-    //   return "|"
-    // }
-    // if(matrix[1][1] == "-" && y == this.rows/2){
-    //   return "-"
-    // }
-    if(_x >= 0 && _y == undefined){
+
+    if(_x >= 0 && _y===  undefined){
       // we are on a vertical edge, but not in a corner
       let i = 0;
       while(i < nbRows && y > parseInt(i / (nbRows-1) * this.rows)){
@@ -151,7 +157,7 @@ class ClockDigit extends HTMLElement {
         return ""
       }
     }
-    if(_y >= 0 && _x == undefined){
+    if(_y >= 0 && _x ===  undefined){
       // we are on an horizontal edge, but not in a corner
       let i = 0;
       while(i < nbCols && x > parseInt(i / (nbCols-1) * this.cols)){
@@ -199,7 +205,10 @@ class ClockDigit extends HTMLElement {
 
   show(val) {
     if(!this.matrix){ return }
+    if(this.val == val){ return }
+    this.val = val
     const matrix = this.mapping(val)
+    console.log("show", val, matrix)
     let x = 0
     let y = 0
     let pixel
