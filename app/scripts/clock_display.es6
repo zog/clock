@@ -10,12 +10,12 @@ class ClockDisplay extends HTMLElement {
 
   get rows(){
     let s = this.getAttribute('rows');
-    return s ? JSON.parse(s) : 8;
+    return s ? parseInt(s) : 8;
   }
 
   get cols(){
     let s = this.getAttribute('cols');
-    return s ? JSON.parse(s) : 8;
+    return s ? parseInt(s) : 8;
   }
 
   get pixels(){
@@ -57,12 +57,17 @@ class ClockDisplay extends HTMLElement {
     this.digits = []
     let i = 0
     let digit
+    const shadow = this.createShadowRoot()
+    const style = document.createElement("style")
+    style.innerHTML = '@import "styles/clock.css";'
+
+    shadow.appendChild(style)
     while(i < this.digitsCount){
       digit = document.createElement("clock-digit")
       digit.setAttribute("rows", this.rows)
       digit.setAttribute("cols", this.cols)
       digit.setAttribute("pixels", this.pixels)
-      this.appendChild(digit)
+      shadow.appendChild(digit)
       this.digits.push(digit)
       i += 1
     }
@@ -72,7 +77,6 @@ class ClockDisplay extends HTMLElement {
     // this.digits[0].show(2)
 
     this.addEventListener('mousedown', ()=>{
-      console.log("down")
       this.locked = true
       this.lock()
     })
@@ -81,7 +85,6 @@ class ClockDisplay extends HTMLElement {
       let p = Promise.resolve()
       let i = 0
       let val = this.digitsVals()
-      console.log("up", val)
       this.digits.forEach((digit, i)=>{
         p = p.then(()=>{
           console.log(val, i)

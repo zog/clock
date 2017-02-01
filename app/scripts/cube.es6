@@ -24,7 +24,7 @@ class Cube extends Clock {
     let _val
     if(val == "" || val == "."){
       _val = "off"
-      this.classList.add("hidden")
+      this.classList.add("disabled")
     } else {
       _val = "on"
     }
@@ -36,9 +36,9 @@ class Cube extends Clock {
     }, 500)
 
     if(_val == "off"){
-      this.classList.add("hidden")
+      this.classList.add("disabled")
     } else {
-      this.classList.remove("hidden")
+      this.classList.remove("disabled")
     }
   }
 }

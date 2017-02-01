@@ -4,12 +4,12 @@ import Cube from './cube'
 class ClockDigit extends HTMLElement {
   get rows(){
     let s = this.getAttribute('rows');
-    return s ? parseInt(JSON.parse(s)) : 8;
+    return s ? parseInt(s) : 8;
   }
 
   get cols(){
     let s = this.getAttribute('cols');
-    return s ? parseInt(JSON.parse(s)) : 4;
+    return s ? parseInt(s) : 4;
   }
 
   get pixels(){
@@ -89,7 +89,7 @@ class ClockDigit extends HTMLElement {
     this.matrix = []
     while(i < this.rows){
       let row = document.createElement('div')
-      row.classList.add('row')
+      row.classList.add('digit-row')
       if(!this.matrix[i]){ this.matrix[i] = [] }
       while(j < this.cols){
         var clock = document.createElement(this.pixels)

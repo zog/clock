@@ -56,12 +56,12 @@ class Clock extends HTMLElement {
       this.classList.remove('active')
     }, 500)
     if(val == "" || val == "."){
-      this.classList.add("hidden")
+      this.classList.add("disabled")
       this.minutes.style.transform = "rotate(0deg)"
       this.hours.style.transform = "rotate(20deg)"
     }
     else{
-      this.classList.remove("hidden")
+      this.classList.remove("disabled")
       if(val == "|"){
         this.minutes.style.transform = "rotate(90deg)"
         this.hours.style.transform = "rotate(-90deg)"

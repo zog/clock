@@ -14,6 +14,7 @@
 
         <!-- endbower -->
         <!-- endbuild -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <!-- build:css(.tmp) styles/main.css -->
         <link rel="stylesheet" href="styles/main.css">
         <!-- endbuild -->
@@ -25,12 +26,48 @@
         <![endif]-->
 
 
-        <clock-display  cols="4"></clock-display>
-        <clock-display pixels="custom-cube" cols="4"></clock-display>
+        <div class="settings row">
+            <fieldset class='col-md-6'>
+                <legend>Pixels</legend>
+                <label class="radio-inline">
+                    <input type="radio" name="pixels" value="custom-clock" checked="" />
+                    Clocks
+                </label>
 
+                <label class="radio-inline">
+                    <input type="radio" name="pixels" value="custom-cube" />
+                    Tiles
+                </label>
+            </fieldset>
+            <fieldset class='col-md-6 form-inline'>
+                <legend>Resolution</legend>
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="number" name="cols" value="4" id="colsInput" class="form-control"/>
+                        <div class="input-group-addon">Cols</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="number" name="rows" value="4" id="rowsInput" class="form-control"/>
+                        <div class="input-group-addon">Rows</div>
+                    </div>
+                </div>
 
+            </fieldset>
+        </div>
+        <div id="display"></div>
+
+        <script src="https://code.jquery.com/jquery-2.x-git.min.js"></script>
+        <script type="text/javascript">
+            if (typeof HTMLElement !== 'function'){
+                var _HTMLElement = function(){};
+                _HTMLElement.prototype = HTMLElement.prototype;
+                HTMLElement = _HTMLElement;
+            }
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/0.7.23/webcomponents.min.js"></script>
         <!-- build:js({app,.tmp}) scripts/main.js -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/0.7.23/CustomElements.min.js"></script>
         <script src="scripts/main.js"></script>
         <!-- endbuild -->
 </body>
