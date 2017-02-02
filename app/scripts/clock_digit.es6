@@ -190,11 +190,14 @@ class ClockDigit extends HTMLElement {
   }
 
   animate(val) {
+    console.log(val)
     let p = Promise.resolve()
     let matrix = val
-    if(typeof(matrix) === String){
-      matrix = this.mapping(matrix)
+    if(val.length == 1){
+      // we don't have a matric but a char
+      matrix = this.mapping(val)
     }
+    matrix = this.splitToMatrix(matrix)
     let x = 0
     let y = 0
     let pixel
@@ -213,7 +216,6 @@ class ClockDigit extends HTMLElement {
   }
 
   displayMatrix(string) {
-    // console.log(string)
     let x = 0
     let y = 0
     let pixel
