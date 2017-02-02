@@ -191,7 +191,10 @@ class ClockDigit extends HTMLElement {
 
   animate(val) {
     let p = Promise.resolve()
-    const matrix = this.mapping(val)
+    let matrix = val
+    if(typeof(matrix) === String){
+      matrix = this.mapping(matrix)
+    }
     let x = 0
     let y = 0
     let pixel

@@ -29,10 +29,23 @@ class ClockDisplay extends HTMLElement {
   }
 
   displayMatrix(index, matrix){
+    if(!this.customMatrix){ this.customMatrix = {}}
+    this.customMatrix[index] = matrix
+    if(this.locked){ return }
     this.digits[index].displayMatrix(matrix)
   }
 
   digitsVals() {
+    if(this.customMatrix){
+      let out = []
+      for(let i in this.customMatrix){
+        out.push(this.customMatrix[i])
+      }
+      return out
+    }
+    if(this.customText){
+      return this.customText.split("")
+    }
     const date = new Date()
     const h = date.getHours()
     const hh = parseInt(h/10)
@@ -44,6 +57,12 @@ class ClockDisplay extends HTMLElement {
   }
 
   loopIteration(){
+    if(this.customMatrix){
+      for(let i in this.customMatrix){
+        this.digits[i].displayMatrix(this.customMatrix[i])
+      }
+      return
+    }
     if(this.customText){ this.showCustomText(); return}
     if(this.locked){ return}
     this.showTime()
@@ -120,7 +139,7 @@ class ClockDisplay extends HTMLElement {
 
       p.then(()=>{
         this.locked = false
-        setTimeout(()=>{this.showTime()}, 1000)
+        setTimeout(()=>{this.loopIteration()}, 1000)
       })
     })
   }
