@@ -28,15 +28,17 @@ custom-matrix
   margin-bottom: 50px
   float: left
   margin-right: 50px
+  border: 2px solid #ccc
 
   .pixels-row
     display: flex
 
   matrix-pixel
     flex: 1
-    background-color: #eee
-    margin: 3px
+    padding: 3px
     position: relative
+    background-color: #eee
+    border: 2px solid #ccc
     .selector
       position: absolute
       z-index: 10
@@ -69,7 +71,7 @@ custom-matrix
     &:hover
       background-color: orange
     &.selected
-      background-color: blue
+      background-color: #70AFFD
     &:before
       content: ''
       float: left

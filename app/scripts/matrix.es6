@@ -15,11 +15,8 @@ class Matrix extends HTMLElement {
     return s ? parseInt(s) : 8;
   }
 
-  updatePixel(data){
-    console.log('updatePixel', data)
-
-    this.vals[data.y][data.x] = data.val
-    console.log(this.vals)
+  updatePixel(pixel){
+    this.vals[pixel.y][pixel.x] = pixel.val
 
     const event = new Event('change')
     this.dispatchEvent(event)
@@ -30,32 +27,81 @@ class Matrix extends HTMLElement {
   }
 
   mousedown(e){
-    console.log("mousedown", e)
     this.hoverOrigin = e
     this.pixels[e.y][e.x].select()
     this.selectedPixels = [this.pixels[e.y][e.x]]
   }
 
+  computeVal(prev, pixel, next){
+    if(prev.x == pixel.x){
+      if(next){
+        if(next.x > pixel.x){
+          if(prev.y < pixel.y){
+            return "⌞"
+          }
+          else{
+            return "⌜"
+          }
+        }
+        else if(next.x < pixel.x){
+          if(prev.y < pixel.y){
+            return "⌟"
+          }
+          else{
+            return "⌝"
+          }
+        }
+      }
+      return "|"
+    } else{
+      if(next){
+        if(next.y > pixel.y){
+          // going downward
+          if(prev.x < pixel.x){
+            return "⌝"
+          }
+          else{
+            return "⌜"
+          }
+        }
+        else if(next.y < pixel.y){
+          // going upward
+          if(prev.x < pixel.x){
+            return "⌟"
+          }
+          else{
+            return "⌞"
+          }
+        }
+      }
+      return "-"
+    }
+  }
+
+  composeVal(prevVal, newVal){
+    // if(prevVal == "" || prevVal == "." || prevVal == newVal){ return newVal}
+
+    return newVal
+  }
+
   mouseup(e){
-    console.log("mouseup", e)
-    if(e.x == this.hoverOrigin.x && e.y == this.hoverOrigin.y){
+    if(this.selectedPixels.length == 1){
       this.showSelector(this.pixels[e.y][e.x])
     }
     else{
-      let newVal
-      if(this.hoverDirection == "vertical"){
-        newVal = "|"
-      }
-      else if(this.hoverDirection == "horizontal"){
-        newVal = "-"
-      }
-
-      if(newVal){
-        for(let p of this.selectedPixels){
-          p.val = newVal
-          p.text.innerHTML = newVal
-          this.updatePixel({x: p.x, y: p.y, val: newVal})
-        }
+      let prev = this.selectedPixels.splice(0,1)[0]
+      let i = 0
+      let newVal = this.computeVal(this.selectedPixels[0], prev, null)
+      prev.val = this.composeVal(prev.val, newVal)
+      prev.unselect()
+      this.updatePixel(prev)
+      for(let pixel of this.selectedPixels){
+        console.log(pixel)
+        pixel.val = this.computeVal(prev, pixel, this.selectedPixels[i+1])
+        console.log(prev, pixel, this.selectedPixels[i+1], this.computeVal(prev, pixel, this.selectedPixels[i+1]))
+        prev = pixel
+        this.updatePixel(pixel)
+        i ++
       }
       this.unselectPixels()
     }
@@ -82,12 +128,11 @@ class Matrix extends HTMLElement {
       this.selector.appendChild(valInput)
       valInput.addEventListener('click', (e)=>{
         e.stopImmediatePropagation()
-        console.log('Here', e)
         const newVal = e.target.getAttribute("value")
         for(let p of this.selectedPixels){
           p.val = newVal
           p.text.innerHTML = newVal
-          this.updatePixel({x: p.x, y: p.y, val: newVal})
+          this.updatePixel(p)
         }
         pixel.removeChild(this.selector)
         this.selector = null
@@ -101,31 +146,35 @@ class Matrix extends HTMLElement {
   mouseover(e){
     if(!this.hoverOrigin){ return }
     if(!this.selectedPixels){ this.selectedPixels = [] }
-    console.log("mouseover", e)
-    if(e.x == this.hoverOrigin.x){
-      this.hoverDirection = "vertical"
-      this.unselectPixels()
-      let i = Math.min(e.y, this.hoverOrigin.y)
-      const end = Math.max(e.y, this.hoverOrigin.y)
-      while(i <= end){
-        let p = this.pixels[i][e.x]
-        this.selectedPixels.push(p)
-        p.select()
-        i ++
-      }
+    let p = this.pixels[e.y][e.x]
+    if(this.selectedPixels[this.selectedPixels.length - 1] != p){
+      this.selectedPixels.push(p)
+      p.select()
     }
-    else if(e.y == this.hoverOrigin.y){
-      this.hoverDirection = "horizontal"
-      this.unselectPixels()
-      let i = Math.min(e.x, this.hoverOrigin.x)
-      const end = Math.max(e.x, this.hoverOrigin.x)
-      while(i <= end){
-        let p = this.pixels[e.y][i]
-        this.selectedPixels.push(p)
-        p.select()
-        i ++
-      }
-    }
+    // if(e.x == this.hoverOrigin.x){
+    //   this.hoverDirection = "vertical"
+    //   this.unselectPixels()
+    //   let i = Math.min(e.y, this.hoverOrigin.y)
+    //   const end = Math.max(e.y, this.hoverOrigin.y)
+    //   while(i <= end){
+    //     let p = this.pixels[i][e.x]
+    //     this.selectedPixels.push(p)
+    //     p.select()
+    //     i ++
+    //   }
+    // }
+    // else if(e.y == this.hoverOrigin.y){
+    //   this.hoverDirection = "horizontal"
+    //   this.unselectPixels()
+    //   let i = Math.min(e.x, this.hoverOrigin.x)
+    //   const end = Math.max(e.x, this.hoverOrigin.x)
+    //   while(i <= end){
+    //     let p = this.pixels[e.y][i]
+    //     this.selectedPixels.push(p)
+    //     p.select()
+    //     i ++
+    //   }
+    // }
   }
 
   unselectPixels() {

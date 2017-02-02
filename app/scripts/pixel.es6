@@ -4,6 +4,15 @@ class Pixel extends HTMLElement {
     return this.matrix.allowedValues
   }
 
+  set val(newVal) {
+    this.text.innerHTML = newVal
+    this._val = newVal
+  }
+
+  get val() {
+    return this._val
+  }
+
   get x() {
     return parseInt(this.getAttribute('x'))
   }
@@ -29,7 +38,6 @@ class Pixel extends HTMLElement {
   attachedCallback() {
     this.val = this.vals[0]
     this.valIndex = 0
-    this.text.innerHTML = this.val
     this.addEventListener('mousedown', (e)=>{
       if(this.matrix.selector){ return }
       e.preventDefault()
