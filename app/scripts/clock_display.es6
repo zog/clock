@@ -20,12 +20,16 @@ class ClockDisplay extends HTMLElement {
 
   get customText(){
     let s = this.getAttribute('custom-text');
-    return s && s.length > 0 ? s : null;
+    return s != undefined && s.length > 0 ? s : null;
   }
 
   get pixels(){
     let s = this.getAttribute('pixels');
     return s ? s : "custom-clock";
+  }
+
+  displayMatrix(index, matrix){
+    this.digits[index].displayMatrix(matrix)
   }
 
   digitsVals() {

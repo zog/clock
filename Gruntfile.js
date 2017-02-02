@@ -203,7 +203,10 @@ module.exports = function (grunt) {
 
         shell: {
             rollup: {
-                command: "rollup  -c  rollup.config.js"
+                command: [
+                    "rollup  -c  rollup.config.js",
+                    "rollup  -c  rollup.etch.js",
+                ].join('&&')
             }
         },
         // rollup: {

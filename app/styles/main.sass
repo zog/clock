@@ -7,6 +7,7 @@ body
 
 #display
   margin-top: 100px
+  clear: both
 
 .settings
   background-color: #eee
@@ -17,3 +18,60 @@ clock-display
 
 fieldset
   margin-bottom: 40px
+
+custom-matrix
+  width: 300px
+  display: flex
+  flex-direction: column
+  margin: auto
+  margin-top: 50px
+  margin-bottom: 50px
+  float: left
+  margin-right: 50px
+
+  .pixels-row
+    display: flex
+
+  matrix-pixel
+    flex: 1
+    background-color: #eee
+    margin: 3px
+    position: relative
+    .selector
+      position: absolute
+      z-index: 10
+      width: 400%
+      height: 300%
+      top: 0
+      left: 0
+      div
+        float: left
+        width: 25%
+        background-color: #ecc
+        text-align: center
+        &:hover
+          background-color: orange
+        &:before
+          content: ''
+          float: left
+          padding-top: 100%
+        &:first-child
+          background-color: white
+
+    .text
+      position: absolute
+      left: 50%
+      top: 50%
+      text-align: center
+      font-size: 20px
+      line-height: 20px
+      transform: translate(-50%, -50%)
+    &:hover
+      background-color: orange
+    &.selected
+      background-color: blue
+    &:before
+      content: ''
+      float: left
+      padding-top: 100%
+

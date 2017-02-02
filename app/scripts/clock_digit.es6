@@ -21,7 +21,7 @@ class ClockDigit extends HTMLElement {
   mapping(val) {
     const key = (val === undefined ? "" : `${val}`)
     console.log(val, key)
-    const s = {
+    return {
       "": `
       ..
       ..
@@ -38,7 +38,10 @@ class ClockDigit extends HTMLElement {
       `,
       "2": `
         --⌝
+        ..|
         ⌜-⌟
+        |..
+        |..
         ⌞--
       `,
       "3": `
@@ -75,7 +78,7 @@ class ClockDigit extends HTMLElement {
       "9": `
         ⌜-⌝
         |.|
-        ⌞-|
+        ⌞-⊣
         ..|
         ..|
         ..|
@@ -83,9 +86,12 @@ class ClockDigit extends HTMLElement {
         ..|
       `
     }[key]
+  }
+
+  splitToMatrix(s) {
     let a = s.split("\n").map((e)=>{return e.trim().split('')})
-    a.splice(0, 1)
-    a.pop()
+    if(a[0].length == 0){ a.splice(0, 1) }
+    if(a[a.length - 1].length == 0){ a.pop() }
     return a
   }
 
@@ -150,7 +156,7 @@ class ClockDigit extends HTMLElement {
         i ++
       }
       const prevAnchor = matrix[i-1][_x]
-      if(prevAnchor == "⌜" || prevAnchor == "⌝" || prevAnchor == "⊢" || prevAnchor == "⊣" || prevAnchor == "⊤" || prevAnchor == "|"){
+      if(prevAnchor == "⌜" || prevAnchor == "⌝" || prevAnchor == "⊢" || prevAnchor == "⊥" || prevAnchor == "⊣" || prevAnchor == "⊤" || prevAnchor == "|"){
         return '|'
       }
       else {
@@ -164,7 +170,7 @@ class ClockDigit extends HTMLElement {
         i ++
       }
       const prevAnchor = matrix[_y][i-1]
-      if(prevAnchor == "⌜" || prevAnchor == "⌞" || prevAnchor == "⊤" || prevAnchor == "⊢" || prevAnchor == "⊣" || prevAnchor == "-"){
+      if(prevAnchor == "⌜" || prevAnchor == "⌞" || prevAnchor == "⊤" || prevAnchor == "⊥" || prevAnchor == "⊢" || prevAnchor == "⊣" || prevAnchor == "-"){
         return "-"
       }
       else {
@@ -203,15 +209,12 @@ class ClockDigit extends HTMLElement {
     return p
   }
 
-  show(val) {
-    if(!this.matrix){ return }
-    if(this.val == val){ return }
-    this.val = val
-    const matrix = this.mapping(val)
-    console.log("show", val, matrix)
+  displayMatrix(string) {
+    // console.log(string)
     let x = 0
     let y = 0
     let pixel
+    const matrix = this.splitToMatrix(string)
     for(let line of this.matrix){
       x = 0
       for(let clock of line){
@@ -221,6 +224,14 @@ class ClockDigit extends HTMLElement {
       }
       y += 1
     }
+  }
+
+  show(val) {
+    if(!this.matrix){ return }
+    if(this.val == val){ return }
+    this.val = val
+    const matrix = this.mapping(val)
+    this.displayMatrix(matrix)
   }
 }
 

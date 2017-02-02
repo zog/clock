@@ -73,12 +73,13 @@ class Clock extends HTMLElement {
       else if(val == "⌜"){
         this.minutes.style.transform = "rotate(0deg)"
         this.hours.style.transform = "rotate(90deg)"
-      } else if(val == "⊢"){
+      } else if(val == "⊢" || val == "⊣"){
         this.minutes.style.transform = "rotate(-90deg)"
         this.hours.style.transform = "rotate(90deg)"
-      } else if(val == "⊣"){
-        this.minutes.style.transform = "rotate(-90deg)"
-        this.hours.style.transform = "rotate(90deg)"
+
+      } else if(val == "⊤" || val ==  "⊥"){
+        this.minutes.style.transform = "rotate(0deg)"
+        this.hours.style.transform = "rotate(180deg)"
       }
       else if(val == "⌝"){
         this.minutes.style.transform = "rotate(180deg)"

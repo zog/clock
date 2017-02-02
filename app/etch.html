@@ -1,0 +1,80 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>clock</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+
+        <!-- endbower -->
+        <!-- endbuild -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <!-- build:css(.tmp) styles/main.css -->
+        <link rel="stylesheet" href="styles/main.css">
+        <!-- endbuild -->
+
+    </head>
+    <body>
+        <!--[if lt IE 10]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+
+        <div class="settings row">
+            <fieldset class='col-md-4'>
+                <legend>Pixels</legend>
+                <label class="radio-inline">
+                    <input type="radio" name="pixels" value="custom-clock" checked="" />
+                    Clocks
+                </label>
+
+                <label class="radio-inline">
+                    <input type="radio" name="pixels" value="custom-cube" />
+                    Tiles
+                </label>
+            </fieldset>
+            <fieldset class='col-md-4 form-inline'>
+                <legend>Resolution</legend>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <div class="input-group">
+                            <input type="number" name="cols" value="10" id="colsInput" class="form-control" pattern="\d*"/>
+                            <div class="input-group-addon">Cols</div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <div class="input-group">
+                            <input type="number" name="rows" value="10" id="rowsInput" class="form-control" pattern="\d*"/>
+                            <div class="input-group-addon">Rows</div>
+                        </div>
+                    </div>
+                </div>
+
+            </fieldset>
+        </div>
+
+        <custom-matrix></custom-matrix>
+        <custom-matrix></custom-matrix>
+        <custom-matrix></custom-matrix>
+        <div id="display"></div>
+
+        <script src="https://code.jquery.com/jquery-2.x-git.min.js"></script>
+        <script type="text/javascript">
+            if (typeof HTMLElement !== 'function'){
+                var _HTMLElement = function(){};
+                _HTMLElement.prototype = HTMLElement.prototype;
+                HTMLElement = _HTMLElement;
+            }
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/0.7.23/webcomponents.min.js"></script>
+        <!-- build:js({app,.tmp}) scripts/etch.js -->
+        <script src="scripts/etch.js"></script>
+        <!-- endbuild -->
+</body>
+</html>
