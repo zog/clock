@@ -6,12 +6,12 @@ body
 
 
 #display
-  margin-top: 100px
   clear: both
 
 .settings
   background-color: #eee
   padding: 40px 40px 0
+  margin-bottom: 20px
 
 clock-display
   display: flex
@@ -19,15 +19,19 @@ clock-display
 fieldset
   margin-bottom: 40px
 
-custom-matrix
-  width: 300px
+.matrixes
   display: flex
+  flex-wrap: wrap
+  justify-content: space-between
+
+custom-matrix
+  flex: 1
+  display: flex
+  min-width: 200px
+  max-width: 300px
   flex-direction: column
   margin: auto
-  margin-top: 50px
-  margin-bottom: 50px
-  float: left
-  margin-right: 50px
+  margin: 20px
   border: 2px solid #ccc
 
   .pixels-row

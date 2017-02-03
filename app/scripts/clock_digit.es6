@@ -20,7 +20,6 @@ class ClockDigit extends HTMLElement {
 
   mapping(val) {
     const key = (val === undefined ? "" : `${val}`)
-    console.log(val, key)
     return {
       "": `
       ..
@@ -190,7 +189,6 @@ class ClockDigit extends HTMLElement {
   }
 
   animate(val) {
-    console.log(val)
     let p = Promise.resolve()
     let matrix = val
     if(val.length == 1){

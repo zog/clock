@@ -96,9 +96,7 @@ class Matrix extends HTMLElement {
       prev.unselect()
       this.updatePixel(prev)
       for(let pixel of this.selectedPixels){
-        console.log(pixel)
         pixel.val = this.computeVal(prev, pixel, this.selectedPixels[i+1])
-        console.log(prev, pixel, this.selectedPixels[i+1], this.computeVal(prev, pixel, this.selectedPixels[i+1]))
         prev = pixel
         this.updatePixel(pixel)
         i ++
@@ -151,30 +149,6 @@ class Matrix extends HTMLElement {
       this.selectedPixels.push(p)
       p.select()
     }
-    // if(e.x == this.hoverOrigin.x){
-    //   this.hoverDirection = "vertical"
-    //   this.unselectPixels()
-    //   let i = Math.min(e.y, this.hoverOrigin.y)
-    //   const end = Math.max(e.y, this.hoverOrigin.y)
-    //   while(i <= end){
-    //     let p = this.pixels[i][e.x]
-    //     this.selectedPixels.push(p)
-    //     p.select()
-    //     i ++
-    //   }
-    // }
-    // else if(e.y == this.hoverOrigin.y){
-    //   this.hoverDirection = "horizontal"
-    //   this.unselectPixels()
-    //   let i = Math.min(e.x, this.hoverOrigin.x)
-    //   const end = Math.max(e.x, this.hoverOrigin.x)
-    //   while(i <= end){
-    //     let p = this.pixels[e.y][i]
-    //     this.selectedPixels.push(p)
-    //     p.select()
-    //     i ++
-    //   }
-    // }
   }
 
   unselectPixels() {

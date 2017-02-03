@@ -53,7 +53,7 @@ class ClockDisplay extends HTMLElement {
     const mm = parseInt(m/10)
     const s = date.getSeconds()
     const ss = parseInt(s/10)
-    return [hh, h - hh*10, mm, m - mm*10, ss, s - ss*10]
+    return [hh, h - hh*10, mm, m - mm*10, ss, s - ss*10].map((d)=>{ return `${d}` })
   }
 
   loopIteration(){
@@ -119,7 +119,6 @@ class ClockDisplay extends HTMLElement {
 
     this.locked = false
     this.loopIteration()
-    // this.digits[0].show(9)
 
     this.addEventListener('mousedown', ()=>{
       this.locked = true
@@ -132,7 +131,6 @@ class ClockDisplay extends HTMLElement {
       let val = this.digitsVals()
       this.digits.forEach((digit, i)=>{
         p = p.then(()=>{
-          console.log(val, i)
           return digit.animate(val[i])
         })
       })
