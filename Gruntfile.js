@@ -206,6 +206,7 @@ module.exports = function (grunt) {
                 command: [
                     "rollup  -c  rollup.config.js",
                     "rollup  -c  rollup.etch.js",
+                    "rollup  -c  rollup.fullscreen.js",
                 ].join('&&')
             }
         },

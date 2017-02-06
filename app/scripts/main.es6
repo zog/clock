@@ -17,7 +17,7 @@ const displayClock = ()=>{
   for(let k in values){
     out.setAttribute(k, values[k])
   }
-  out.setAttribute("custom-text", $('input[name=customText]').val())
+  out.setAttribute("custom-text", $('input[name=custom-text]').val())
 
   $('#display')[0].appendChild(out)
 }
@@ -38,7 +38,7 @@ $(document).ready(()=>{
     displayClock()
   })
 
-  $('input[name=customText]').change((e)=>{
+  $('input[name=custom-text]').change((e)=>{
     $('#display clock-display').attr('custom-text', $(e.target).val())
   })
 
