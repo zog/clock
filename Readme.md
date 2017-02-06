@@ -4,4 +4,4 @@ Simple project to experiment further with Custom Elements and work on an efficie
 
 You can see it live here: http://clock.about-blank.fr (don't forget to click on the display areas)
 
-<iframe src="http://0.0.0.0:9000/fullscreen.html" />
+<iframe src="http://clock.about-blank.fr/fullscreen.html" width="700" height="100"></iframe>
