@@ -19,9 +19,10 @@ const displayClock = ()=>{
 
   for(let k in vars){
     let pair = vars[k].split('=');
-    out.setAttribute(pair[0], pair[1])
+    if(pair[0].length > 0){
+      out.setAttribute(pair[0], pair[1])
+    }
   }
-  // out.setAttribute("custom-text", $('input[name=customText]').val())
 
   document.getElementById('display').appendChild(out)
 }
