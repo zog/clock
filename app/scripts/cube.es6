@@ -20,26 +20,16 @@ class Cube extends Clock {
     })
   }
 
-  show(val) {
-    let _val
-    if(val == "" || val == "."){
-      _val = "off"
-      this.classList.add("disabled")
-    } else {
-      _val = "on"
-    }
-    if(this.val == _val){ return }
+  show(input) {
+    const val = !(input == "" || input == ".")
+    if(this.val === val){ return }
     this.classList.add('active')
-    this.val = _val
+    this.val = val
     setTimeout(()=>{
       this.classList.remove('active')
     }, 500)
 
-    if(_val == "off"){
-      this.classList.add("disabled")
-    } else {
-      this.classList.remove("disabled")
-    }
+    this.classList.toggle("disabled", !val)
   }
 }
 
