@@ -1,5 +1,3 @@
-
-
 import ClockDisplay from './clock_display'
 
 let pixels = "custom-clock"

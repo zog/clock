@@ -45,6 +45,10 @@ module.exports = function (grunt) {
             gruntfile: {
                 files: ['Gruntfile.js']
             },
+            html: {
+                files: ['app/**/*.html'],
+                tasks: ['includes:html']
+            },
             sass: {
                 files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
                 tasks: ['sass:dist', 'autoprefixer']
@@ -61,9 +65,28 @@ module.exports = function (grunt) {
                     '<%= yeoman.app %>/{,*/}*.html',
                     '.tmp/styles/{,*/}*.css',
                     '.tmp/scripts/{,*/}*.js',
+                    '.tmp/{,*/}*.html',
                     '<%= yeoman.app %>/images/{,*/}*.{gif,jpeg,jpg,png,svg,webp}'
                 ]
             }
+        },
+
+        includes: {
+          html: {
+            files: [{
+              cwd: 'app/views/',
+              src: '*.html',
+              dest: '.tmp',
+            }],
+          },
+
+          dist: {
+            files: [{
+              cwd: 'app/views/',
+              src: '*.html',
+              dest: '<%= yeoman.dist %>',
+            }],
+          },
         },
 
         // The actual grunt server settings
@@ -207,6 +230,7 @@ module.exports = function (grunt) {
                     "rollup  -c  rollup.config.js",
                     "rollup  -c  rollup.etch.js",
                     "rollup  -c  rollup.fullscreen.js",
+                    "rollup  -c  rollup.text.js",
                 ].join('&&')
             }
         },
@@ -437,6 +461,7 @@ module.exports = function (grunt) {
             'concurrent:server',
             // 'babel:dist',
             'shell:rollup',
+            'includes:html',
             'autoprefixer',
             'connect:livereload',
             'watch'
@@ -472,6 +497,7 @@ module.exports = function (grunt) {
         'sass:dist',
         'babel:dist',
         'shell:rollup',
+        'includes:dist',
         'cssmin',
         'uglify',
         'copy:dist',

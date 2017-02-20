@@ -5,8 +5,8 @@ clock-digit
     overflow: diabled
     display: flex
 
-  &:nth-child(2n+1)
-    margin-right: 3vw
+  // &:nth-child(2n+1)
+  //   margin-right: 3vw
   &:last-child
     margin-right: 0
 
@@ -70,6 +70,10 @@ custom-clock
     background-color: orange
   &.locked
     background-color: black
+  .large &
+    transition: none
+    &.active
+      background-color: inherit
   .hand
     position: absolute
     top: 50%

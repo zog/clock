@@ -24,11 +24,11 @@
         <!--[if lt IE 10]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        include "nav.html"
+        include "partials/nav.html"
 
         <div class="settings row">
             <form action="/fullscreen.html">
-                <fieldset class='col-md-2'>
+                <fieldset class='col-md-4'>
                     <legend>Pixels</legend>
                     <label class="radio-inline">
                         <input type="radio" name="pixels" value="custom-clock" checked="" />
@@ -58,14 +58,7 @@
                     </div>
 
                 </fieldset>
-                <fieldset class='col-md-2 form-inline'>
-                    <legend>Custom Value</legend>
-                    <div class="form-group">
-                        <label for="customText">
-                        <input type="number" name="custom-text" value="" max="999999" min="0" id="customText" class="form-control" pattern="\d*"/>
-                    </div>
 
-                </fieldset>
                 <fieldset class='col-md-2 form-inline'>
                     <legend>Embed</legend>
                     <button class="btn btn-primary">Fullscreen</button>

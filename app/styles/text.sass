@@ -1,0 +1,83 @@
+body
+  background: #fafafa
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
+  color: #444
+  padding: 40px
+
+
+#display
+  clear: both
+
+.settings
+  background-color: #eee
+  padding: 40px 40px 0
+  margin-bottom: 20px
+
+clock-display
+  display: flex
+
+fieldset
+  margin-bottom: 40px
+
+.matrixes
+  display: flex
+  flex-wrap: wrap
+  justify-content: space-between
+
+custom-matrix
+  flex: 1
+  display: flex
+  min-width: 200px
+  max-width: 300px
+  flex-direction: column
+  margin: auto
+  margin: 20px
+  border: 2px solid #ccc
+
+  .pixels-row
+    display: flex
+
+  matrix-pixel
+    flex: 1
+    padding: 3px
+    position: relative
+    background-color: #eee
+    border: 2px solid #ccc
+    .selector
+      position: absolute
+      z-index: 10
+      width: 400%
+      height: 300%
+      top: 0
+      left: 0
+      div
+        float: left
+        width: 25%
+        background-color: #ecc
+        text-align: center
+        &:hover
+          background-color: orange
+        &:before
+          content: ''
+          float: left
+          padding-top: 100%
+        &:first-child
+          background-color: white
+
+    .text
+      position: absolute
+      left: 50%
+      top: 50%
+      text-align: center
+      font-size: 20px
+      line-height: 20px
+      transform: translate(-50%, -50%)
+    &:hover
+      background-color: orange
+    &.selected
+      background-color: #70AFFD
+    &:before
+      content: ''
+      float: left
+      padding-top: 100%
+

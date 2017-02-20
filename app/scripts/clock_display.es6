@@ -28,6 +28,10 @@ class ClockDisplay extends HTMLElement {
     return s ? s : "custom-clock";
   }
 
+  get large(){
+   return this.cols * this.rows *  this.digitsCount > 6*5*6
+  }
+
   displayMatrix(index, matrix){
     if(!this.customMatrix){ this.customMatrix = {}}
     this.customMatrix[index] = matrix
@@ -57,27 +61,52 @@ class ClockDisplay extends HTMLElement {
   }
 
   loopIteration(){
-    if(this.customMatrix){
-      for(let i in this.customMatrix){
-        this.digits[i].displayMatrix(this.customMatrix[i])
-      }
+    this.scheduler = null
+    if(this.locked){ return }
+    if(!this.offset){ this.offset = 0 }
+    if(this.customMatrix){ this.showCustomMatrix(); return}
+    if(this.customText){ this.showCustomText(); return}
+    this.showTime()
+  }
+
+  incrementOffset() {
+    let len = 0
+    if(this.customText){ len = this.customText.length }
+    if(this.customMatrix){ len = this.customMatrix.length }
+    if(len > this.digitsCount){
+      this.offset += 1
+      this.offset = this.offset % len
+    } else {
+      this.offset = 0
+    }
+  }
+
+  scheduleNextIteration(duration=1000) {
+    if(this.scheduler){
       return
     }
-    if(this.customText){ this.showCustomText(); return}
-    if(this.locked){ return}
-    this.showTime()
+    this.scheduler = setTimeout(()=>{
+      this.loopIteration()
+    }, duration)
+  }
+
+  showCustomMatrix() {
+    for(let i in this.customMatrix){
+      this.digits[i].displayMatrix(this.customMatrix[(i + this.offset) % this.customMatrix.length])
+    }
+    this.incrementOffset()
+    this.scheduleNextIteration()
   }
 
   showCustomText(){
     let i = 0
     const text = this.customText
     for(let digit of this.digits){
-      digit.show(text[i])
+      digit.show(text[(i  + this.offset) % text.length])
       i += 1
     }
-    setTimeout(()=>{
-      this.loopIteration()
-    }, 100)
+    this.incrementOffset()
+    this.scheduleNextIteration()
   }
 
   showTime() {
@@ -87,9 +116,7 @@ class ClockDisplay extends HTMLElement {
       digit.show(val[i])
       i += 1
     }
-    setTimeout(()=>{
-      this.loopIteration()
-    }, 100)
+    this.scheduleNextIteration(100)
   }
 
   lock() {
@@ -106,12 +133,19 @@ class ClockDisplay extends HTMLElement {
     const style = document.createElement("style")
     style.innerHTML = '@import "styles/clock.css";'
 
+    if(this.large){
+      this.classList.add('large')
+    }
+
     shadow.appendChild(style)
     while(i < this.digitsCount){
       digit = document.createElement("clock-digit")
       digit.setAttribute("rows", this.rows)
       digit.setAttribute("cols", this.cols)
       digit.setAttribute("pixels", this.pixels)
+      if(this.large){
+        digit.classList.add('large')
+      }
       shadow.appendChild(digit)
       this.digits.push(digit)
       i += 1
@@ -137,7 +171,7 @@ class ClockDisplay extends HTMLElement {
 
       p.then(()=>{
         this.locked = false
-        setTimeout(()=>{this.loopIteration()}, 1000)
+        this.scheduleNextIteration()
       })
     })
   }
