@@ -24,18 +24,18 @@ class Clock extends HTMLElement {
 
   animate(val) {
     return new Promise((res, rej)=>{
-      this.hours.style.transform = "rotate(0deg)"
-      this.minutes.style.transform = "rotate(360deg)"
+      this.hours.style.transform = "rotate3d(0,0,1,0deg)"
+      this.minutes.style.transform = "rotate3d(0,0,1,360deg)"
       this.classList.remove('locked')
       this.classList.add('fast')
 
       setTimeout(()=>{
-        this.hours.style.transform = "rotate(120deg)"
-        this.minutes.style.transform = "rotate(240deg)"
+        this.hours.style.transform = "rotate3d(0,0,1,120deg)"
+        this.minutes.style.transform = "rotate3d(0,0,1,240deg)"
       }, 100)
       setTimeout(()=>{
-        this.hours.style.transform = "rotate(240deg)"
-        this.minutes.style.transform = "rotate(120deg)"
+        this.hours.style.transform = "rotate3d(0,0,1,240deg)"
+        this.minutes.style.transform = "rotate3d(0,0,1,120deg)"
       }, 200)
       setTimeout(()=>{
         this.classList.remove('fast')
@@ -57,41 +57,41 @@ class Clock extends HTMLElement {
     }, 500)
     if(val == "" || val == "."){
       this.classList.add("disabled")
-      this.minutes.style.transform = "rotate(0deg)"
-      this.hours.style.transform = "rotate(20deg)"
+      this.minutes.style.transform = "rotate3d(0,0,1,0deg)"
+      this.hours.style.transform = "rotate3d(0,0,1,20deg)"
     }
     else{
       this.classList.remove("disabled")
       if(val == "|"){
-        this.minutes.style.transform = "rotate(90deg)"
-        this.hours.style.transform = "rotate(-90deg)"
+        this.minutes.style.transform = "rotate3d(0,0,1,90deg)"
+        this.hours.style.transform = "rotate3d(0,0,1,-90deg)"
       }
       else if(val == "-"){
-        this.minutes.style.transform = "rotate(0deg)"
-        this.hours.style.transform = "rotate(-180deg)"
+        this.minutes.style.transform = "rotate3d(0,0,1,0deg)"
+        this.hours.style.transform = "rotate3d(0,0,1,-180deg)"
       }
       else if(val == "⌜"){
-        this.minutes.style.transform = "rotate(0deg)"
-        this.hours.style.transform = "rotate(90deg)"
+        this.minutes.style.transform = "rotate3d(0,0,1,0deg)"
+        this.hours.style.transform = "rotate3d(0,0,1,90deg)"
       } else if(val == "⊢" || val == "⊣"){
-        this.minutes.style.transform = "rotate(-90deg)"
-        this.hours.style.transform = "rotate(90deg)"
+        this.minutes.style.transform = "rotate3d(0,0,1,-90deg)"
+        this.hours.style.transform = "rotate3d(0,0,1,90deg)"
 
       } else if(val == "⊤" || val ==  "⊥"){
-        this.minutes.style.transform = "rotate(0deg)"
-        this.hours.style.transform = "rotate(180deg)"
+        this.minutes.style.transform = "rotate3d(0,0,1,0deg)"
+        this.hours.style.transform = "rotate3d(0,0,1,180deg)"
       }
       else if(val == "⌝"){
-        this.minutes.style.transform = "rotate(180deg)"
-        this.hours.style.transform = "rotate(90deg)"
+        this.minutes.style.transform = "rotate3d(0,0,1,180deg)"
+        this.hours.style.transform = "rotate3d(0,0,1,90deg)"
       }
       else if(val == "⌞"){
-        this.minutes.style.transform = "rotate(00deg)"
-        this.hours.style.transform = "rotate(-90deg)"
+        this.minutes.style.transform = "rotate3d(0,0,1,00deg)"
+        this.hours.style.transform = "rotate3d(0,0,1,-90deg)"
       }
       else if(val == "⌟"){
-        this.minutes.style.transform = "rotate(180deg)"
-        this.hours.style.transform = "rotate(-90deg)"
+        this.minutes.style.transform = "rotate3d(0,0,1,180deg)"
+        this.hours.style.transform = "rotate3d(0,0,1,-90deg)"
       }
     }
   }

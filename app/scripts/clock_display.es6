@@ -81,7 +81,7 @@ class ClockDisplay extends HTMLElement {
     }
   }
 
-  scheduleNextIteration(duration=1000) {
+  scheduleNextIteration(duration=100) {
     if(this.scheduler){
       return
     }
@@ -116,7 +116,7 @@ class ClockDisplay extends HTMLElement {
       digit.show(val[i])
       i += 1
     }
-    this.scheduleNextIteration(100)
+    this.scheduleNextIteration()
   }
 
   lock() {
