@@ -1,14 +1,13 @@
 clock-digit
   flex: 1
-  margin-right: 1vw
+  margin: 0 0.5vw
   .digit-row
     overflow: diabled
     display: flex
 
   // &:nth-child(2n+1)
   //   margin-right: 3vw
-  &:last-child
-    margin-right: 0
+
 
   &:nth-child(6), &:nth-child(7)
     custom-cube
@@ -71,6 +70,7 @@ custom-clock
   &.locked
     background-color: black
   .large &
+    // transition: opacity 0.5s
     transition: none
     &.active
       background-color: inherit
@@ -78,11 +78,11 @@ custom-clock
     position: absolute
     top: 50%
     left: 50%
-    width: 55%
-    height: 3px
+    width: 60%
+    height: 2px
     background-color: black
     transform-origin: 0 50%
-    transition: transform 0.3s
+    transition: transform 1s linear
     &.minutes
       // width: 40%
-      transform: rotate(20deg)
+      transform: rotate3d(0,0,1,20deg)
