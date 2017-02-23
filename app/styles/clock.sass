@@ -71,9 +71,14 @@ custom-clock
     background-color: black
   .large &
     // transition: opacity 0.5s
+    &.active
+      background-color: inherit
+  [low-profile="true"] &
     transition: none
     &.active
       background-color: inherit
+    .hand
+      transition: transform 0.3s linear
   .hand
     position: absolute
     top: 50%

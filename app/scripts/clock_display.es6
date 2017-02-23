@@ -23,6 +23,10 @@ class ClockDisplay extends HTMLElement {
     return s != undefined && s.length > 0 ? s : null;
   }
 
+  get lowProfile(){
+    return this.hasAttribute('low-profile');
+  }
+
   get pixels(){
     let s = this.getAttribute('pixels');
     return s ? s : "custom-clock";
@@ -143,6 +147,7 @@ class ClockDisplay extends HTMLElement {
       digit.setAttribute("rows", this.rows)
       digit.setAttribute("cols", this.cols)
       digit.setAttribute("pixels", this.pixels)
+      digit.setAttribute("low-profile", this.lowProfile)
       if(this.large){
         digit.classList.add('large')
       }
